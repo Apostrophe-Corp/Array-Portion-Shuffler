@@ -44,7 +44,7 @@ const returnRandomSection = (arr, step) => {
 	return ret
 }
 
-const randomize = (arr = []) => {
+const randomize = (arr = []) {
 	let i = 0
 	const array = arr,
 		ret = [],
