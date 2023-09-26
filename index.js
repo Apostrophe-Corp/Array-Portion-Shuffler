@@ -8,27 +8,33 @@ const genArray = (len) => {
 	return arr
 }
 
-const array = genArray(85)
-console.log('Array', array)
-
 const returnRandomSection = (arr, step) => {
 	if (!arr) return arr
 	const len = arr.length
 	const points = Math.floor(len / step)
 	const remainder = len % step
+	console.log({ remainder })
 	let i = 0
 	const indices = []
 	while (i <= points) {
 		indices.push(i * step)
 		i++
 	}
-	const selectedPortion =
-		indices[Math.floor(Math.random(points) * indices.length)]
+	console.log({ indices })
+	const index = Math.floor(Math.random(points) * indices.length)
+	const start =
+		indices[index] === points * step && !remainder
+			? indices[index - 1]
+			: indices[index] === points * step && remainder
+			? indices[index] - (step - remainder)
+			: indices[index]
+
 	const stop =
-		selectedPortion === points * step
-			? selectedPortion + remainder
-			: selectedPortion + (step - 1)
-	let x = selectedPortion
+		indices[index] === points * step && remainder
+			? indices[index] + remainder
+			: start + step
+	let x = start
+	console.log({ start, stop, x })
 	const ret = []
 	while (x < stop) {
 		ret.push(arr[x])
@@ -37,11 +43,6 @@ const returnRandomSection = (arr, step) => {
 
 	return ret
 }
-
-const amount = 40
-console.log('Requested Amount', amount)
-const randomSelection = returnRandomSection(array, amount)
-console.log('Randomly Selected Portion', randomSelection)
 
 const randomize = (arr = []) => {
 	let i = 0
@@ -58,4 +59,12 @@ const randomize = (arr = []) => {
 	return ret
 }
 
-console.log('Shuffled Selection', randomize(randomSelection))
+const arrayLength = 10
+console.log('Array Length:', arrayLength)
+const array = genArray(arrayLength)
+console.log('Generated Array:', array)
+const amount = 5
+console.log('Requested Amount:', amount)
+const randomSelection = returnRandomSection(array, amount)
+console.log('Randomly Selected Portion:', randomSelection)
+console.log('Shuffled Selection:', randomize(randomSelection))
