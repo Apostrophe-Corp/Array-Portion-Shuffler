@@ -34,7 +34,7 @@ const returnRandomSection = (arr, step) => {
 			? indices[index] + remainder
 			: start + step
 	let x = start
-	console.log({ start, stop, x })
+	console.log({ start, stop })
 	const ret = []
 	while (x < stop) {
 		ret.push(arr[x])
@@ -59,12 +59,16 @@ const randomize = (arr = []) => {
 	return ret
 }
 
-const arrayLength = 10
-console.log('Array Length:', arrayLength)
-const array = genArray(arrayLength)
-console.log('Generated Array:', array)
-const amount = 5
-console.log('Requested Amount:', amount)
-const randomSelection = returnRandomSection(array, amount)
-console.log('Randomly Selected Portion:', randomSelection)
-console.log('Shuffled Selection:', randomize(randomSelection))
+let x = 0
+while (x < 10) {
+	const arrayLength = Math.round(Math.random() * 100)
+	console.log('Array Length:', arrayLength)
+	const array = genArray(arrayLength)
+	console.log('Generated Array:', array)
+	const amount = Math.round(Math.random() * arrayLength)
+	console.log('Requested Amount:', amount)
+	const randomSelection = returnRandomSection(array, amount)
+	console.log('Randomly Selected Portion:', randomSelection)
+	console.log('Shuffled Selection:', randomize(randomSelection))
+	x++
+}
