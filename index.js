@@ -9,7 +9,8 @@ const genArray = (len) => {
 }
 
 const returnRandomSection = (arr, step) => {
-	if (!arr) return arr
+	if (!arr || !step) return arr
+	step = arr.length < step ? arr.length : step
 	const len = arr.length
 	const points = Math.floor(len / step)
 	const remainder = len % step
@@ -26,8 +27,8 @@ const returnRandomSection = (arr, step) => {
 		indices[index] === points * step && !remainder
 			? indices[index - 1]
 			: indices[index] === points * step && remainder
-			? indices[index] - (step - remainder)
-			: indices[index]
+				? indices[index] - (step - remainder)
+				: indices[index]
 
 	const stop =
 		indices[index] === points * step && remainder
@@ -62,13 +63,16 @@ const randomize = (arr = []) => {
 let x = 0
 while (x < 10) {
 	const arrayLength = Math.round(Math.random() * 100)
+	// const arrayLength = 6
 	console.log('Array Length:', arrayLength)
 	const array = genArray(arrayLength)
 	console.log('Generated Array:', array)
-	const amount = Math.round(Math.random() * arrayLength)
+	const amount = Math.round(Math.random() * Math.round(Math.random() * 100))
+	// const amount = 36
 	console.log('Requested Amount:', amount)
 	const randomSelection = returnRandomSection(array, amount)
 	console.log('Randomly Selected Portion:', randomSelection)
 	console.log('Shuffled Selection:', randomize(randomSelection))
 	x++
 }
+
